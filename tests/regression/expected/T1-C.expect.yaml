@@ -10,10 +10,11 @@ must_not_contain:
   - "死亡终态象强"
   - "终局利成"
 structured_expect:
-  f5.layer: ["过程阻滞", "救应弱候选"]
-  f6.use_spirit_status: "用神显形"
-  f6.safety_layer: ["高危不安全", "安全未确认"]
-  f6.death_layer: "死亡终态象未坐实"
-  f5.Y1_to_B1: ["弱接触", "未到病"]
-  f5.Y1_luoyan: "未落验"
-  f6.no_new_lines_in_f6: true
+  f5_layer: ["过程阻滞", "救应弱候选"]
+  god_state: "用神显形"
+  safety_layer: ["高危不安全", "安全未确认"]
+  death_symbol_layer: "死亡终态象未坐实"
+  y1_to_b1: ["弱接触", "未到病"]
+  y1_luoyan: "未落验"
+  introduced_new_line_in_f6: false
+  forbidden_terms_used: []

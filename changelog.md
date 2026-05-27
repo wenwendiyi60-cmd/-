@@ -20,6 +20,15 @@
 
 ---
 
+## P2.1：CHECK_JSON 恢复扁平主字段，嵌套降为 detail 附属 — 2026-05-27
+
+> 修正 P2 把 CHECK_JSON 改成纯嵌套、导致 harness 字段对不上的硬点。扁平字段重新成为 harness 主校验口径。
+
+- [修改] 完整版 `liuyao-v0.7-rc1-execution-prompt.md`（升 S1+P1+P2.1）：F7 CHECK_JSON 固定格式恢复 8 个顶层扁平强制字段（f5_layer / god_state / safety_layer / death_symbol_layer / y1_to_b1 / y1_luoyan / introduced_new_line_in_f6 / forbidden_terms_used），嵌套结构降为 `detail.f5` / `detail.f6` 附属；§23.4 改为"扁平字段为主、detail 附属、冲突以扁平为准"+CHECK_JSON 判废规则 19 条；最终收束改"输出兼容 harness 的扁平 CHECK_JSON"；version 串 → S1+P1+P2.1
+- [修复] harness 回退到扁平口径：`expected/*.yaml` 由点路径键改回扁平键、重补 `forbidden_terms_used: []`、`no_new_lines_in_f6:true`→`introduced_new_line_in_f6:false`；`sample_runs/*.txt` 的 CHECK_JSON 改回扁平主字段（run_regression 的点路径支持保留，对扁平键无害）
+- [修改] 审计册注解由"嵌套点路径"改回"扁平主字段 + detail 附属"
+- 校验：单测 6/6；harness overall 25%（T1-A.run2 + T1-C 设计内故意失败，其余全过）
+
 ## P2 整合：执行层程序化约束入正文 + harness 对齐嵌套 CHECK_JSON — 2026-05-27
 
 - [修改] 完整版 `liuyao-v0.7-rc1-execution-prompt.md` 升 S1+P1+P2：§八 F0 加 derived.json 优先输入规则；§九 F1 加输入源判定 + 冲突 VV FAIL + 输入源引用块；§十五 F6 内嵌"禁引入新爻/必回退";§十九 F7.3 加 CHECK_JSON 输出纪律 + 完整嵌套 schema；§二十三 扩为五节（23.1 strict_step / 23.2 derived 优先 / 23.3 证据冻结 F6 禁新增 / 23.4 CHECK_JSON 校验 / 23.5 输出兼容）；LV1/禁增/收束/默认输出同步。章节 一→二十四 连续

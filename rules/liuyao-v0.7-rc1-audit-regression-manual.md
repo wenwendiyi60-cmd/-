@@ -129,7 +129,7 @@ G1：已执行。   G2：已执行。   D2a：已执行。
 
 v0.7-RC1-final 通过回归测试前不得替换 R2。最低构成：A1-A5 旧错必测盘、原六盘基础回归、第七类安危双层外放测试、T1-T3、L5 双向防错对照母盘观察项（E-W001 / E-W002，归入 T1-T3，不新增测试类别）。
 
-可执行版见 `tests/regression/`：每用例两层断言——正文 must_contain / must_not_contain + F7 末尾 CHECK_JSON 结构字段比对 expect.yaml 的 structured_expect（CHECK_JSON 用 P2 嵌套 schema，expect 以点路径取值，如 `f5.layer` / `f6.safety_layer` / `f6.death_layer` / `f6.use_spirit_status` / `f6.no_new_lines_in_f6`）；`--runs N` 多跑抓概率性，输出 per-case 与 overall 失败率。
+可执行版见 `tests/regression/`：每用例两层断言——正文 must_contain / must_not_contain + F7 末尾 CHECK_JSON 结构字段比对 expect.yaml 的 structured_expect（CHECK_JSON 用 P2.1 扁平主字段：`f5_layer` / `god_state` / `safety_layer` / `death_symbol_layer` / `y1_to_b1` / `y1_luoyan` / `introduced_new_line_in_f6` / `forbidden_terms_used`，嵌套 `detail` 仅附属，不得替代）；`--runs N` 多跑抓概率性，输出 per-case 与 overall 失败率。
 
 **通过标准**：任一旧错路径复发不通过；任一原正确盘被新病药结构误拦不通过；T1-T3 任一盘仍用旧“中间终态层 / 三元终态轴 / 复核闸主裁”语言不通过；D2a / D2c 前台后台语言不一致不通过；缺时辰盘把非时辰 Y1 一概降弱不通过；L5 母盘漏列 J1 / B1 与父母医护线、子孙救应线、应爻承接线之间的合冲生克记为执行偏差；将医护接入直接等同终局利成且未正向证明 U1 本体硬证解除不通过；已形成药到病、药落验、回生 U1 闭环却因“安危类谨慎”压成高危救应未断附记不通过；用单盘反馈反向定义通用规则不通过；**把动化鬼无条件写成不可回转终止态不通过**。
 

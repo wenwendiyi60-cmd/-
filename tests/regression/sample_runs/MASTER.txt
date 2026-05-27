@@ -12,10 +12,18 @@ F6a 安危类双层外放：
 
 CHECK_JSON:
 {
-  "version": "1.4.1 R2.1|v0.7-RC1-final|S1+P1+P2",
+  "version": "1.4.1 R2.1|v0.7-RC1-final|S1+P1+P2.1",
   "high_risk": true,
-  "f5": {"executed": true, "Y1_to_B1": "到病", "Y1_luoyan": "已落验", "layer": "终局利成"},
-  "f6": {"route": "F6a", "no_new_lines_in_f6": true, "safety_layer": "平安倾向", "death_layer": "未触发", "use_spirit_status": "用神得救"},
+  "f5_layer": "终局利成",
+  "god_state": "用神得救",
+  "safety_layer": "平安倾向",
+  "death_symbol_layer": "未触发",
+  "y1_to_b1": "到病",
+  "y1_luoyan": "已落验",
+  "f6_route": "F6a",
+  "f6_conclusion": null,
+  "introduced_new_line_in_f6": false,
+  "forbidden_terms_used": [],
   "l5": "未调用",
   "blocking_items": []
 }
