@@ -1,0 +1,19 @@
+（演示·故意违规：Y1 不到病却外放平安倾向、状态档误升）
+
+F6a 安危类双层外放：
+用神状态档：用神得救。
+安全层结论：平安倾向。
+死亡终态象层结论：死亡终态象未坐实。
+
+CHECK_JSON:
+{
+  "case_id": "T1-C",
+  "f5_layer": "过程阻滞",
+  "god_state": "用神得救",
+  "safety_layer": "平安倾向",
+  "death_symbol_layer": "死亡终态象未坐实",
+  "y1_to_b1": "未到病",
+  "y1_luoyan": "未落验",
+  "introduced_new_line_in_f6": false,
+  "forbidden_terms_used": []
+}

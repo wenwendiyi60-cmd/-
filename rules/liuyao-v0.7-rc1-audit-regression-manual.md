@@ -3,7 +3,7 @@
 **版本**：v0.7-RC1-final（病药主轴重排版 · 审计分册）
 **状态**：后台 / 回归测试用，默认不在实战前台展开
 **配套文件**：`prompts/active/liuyao-v0.7-rc1-execution-prompt.md`（执行提示词）
-**回归工具**：`tools/run_regression.py` + `tests/regression_cases.json`（T1-T3 与母盘可执行跑批打分）；`tools/liuyao_paipan.py`（确定性排盘）
+**回归工具**：`tests/regression/run_regression.py` + `tests/regression/cases` + `tests/regression/expected`（T1-T3 与母盘跑批打分，CHECK_JSON + 失败率）；`tools/liuyao_calc`（确定性派生盘）；`tests/test_derive.py`（派生器单测）
 **命名沿用**：LV1-LV5（法源层级）、U1 / R1 / LD1 / C1 / J1 / B1·B2 / Y1·Y2、F1v（伏神）、H1（化爻）、V1（变卦关键爻）、EV1-EV3（证据编号）、EP0-EP3（应期精度档）、G1-G6（原 R2.1 六闸）。R1 只表示结果线；R2 / R2.1 只表示版本或发布基线，不得混用。“L5 观察库”为历史库名，法源层级书写为 LV5。
 
 ---
@@ -129,7 +129,7 @@ G1：已执行。   G2：已执行。   D2a：已执行。
 
 v0.7-RC1-final 通过回归测试前不得替换 R2。最低构成：A1-A5 旧错必测盘、原六盘基础回归、第七类安危双层外放测试、T1-T3、L5 双向防错对照母盘观察项（E-W001 / E-W002，归入 T1-T3，不新增测试类别）。
 
-可执行版见 `tests/regression_cases.json` + `tools/run_regression.py`：对模型输出做 expect_contains / expect_any / expect_absent 断言，`--runs N` 多跑抓概率性，输出失败率。
+可执行版见 `tests/regression/`：每用例两层断言——正文 must_contain / must_not_contain + F7 末尾 CHECK_JSON 结构字段比对 expect.yaml 的 structured_expect；`--runs N` 多跑抓概率性，输出 per-case 与 overall 失败率。
 
 **通过标准**：任一旧错路径复发不通过；任一原正确盘被新病药结构误拦不通过；T1-T3 任一盘仍用旧“中间终态层 / 三元终态轴 / 复核闸主裁”语言不通过；D2a / D2c 前台后台语言不一致不通过；缺时辰盘把非时辰 Y1 一概降弱不通过；L5 母盘漏列 J1 / B1 与父母医护线、子孙救应线、应爻承接线之间的合冲生克记为执行偏差；将医护接入直接等同终局利成且未正向证明 U1 本体硬证解除不通过；已形成药到病、药落验、回生 U1 闭环却因“安危类谨慎”压成高危救应未断附记不通过；用单盘反馈反向定义通用规则不通过；**把动化鬼无条件写成不可回转终止态不通过**。
 
@@ -249,7 +249,7 @@ G2 合冲生克穷举复核，必须覆盖 U1、R1、LD1、C1、J1/B1、Y1/Y2、
 后续恢复：另占。
 ```
 - **正确卦理三项叠加**：① 医护承接成立（辰鬼合酉父，病鬼入医护处置端）；② 父母医护线有力（父母酉金临月，本气当令）；③ 药能回生主用（申日 / 申支金气转实生亥水，形成病鬼入医方→医护线转实→金气生亥水→主用被救回之闭环）。
-- **可执行复核**：`python3 tools/run_regression.py --outputs-dir <dir>` 中用例 `MASTER`（地水师实现：内坎外坤、酉月庚辰日、二爻五爻动）；排盘由 `tools/liuyao_paipan.py` 算定，辰酉合、五爻亥化戌官鬼回头克、二爻辰化巳财、父母酉金临月旬空均自动给出。
+- **可执行复核**：`python3 tests/regression/run_regression.py` 中用例 `MASTER`（地水师实现：内坎外坤、丁酉月庚辰日、二爻五爻动）；排盘由 `tools/liuyao_calc`（fixture `tests/fixtures/liuyao_cases/master_dishuishi.yaml`）算定，辰酉合、五爻亥化戌官鬼回头克、二爻辰化巳财、父母酉金临月旬空均自动给出。
 - **验收标准**：不得漏列辰酉合；不得把辰酉合直接写成鬼克解除；不得把医护接入直接写成抢救成功；**不得把亥水动化戌鬼直接写成无条件不可回转终止态**；不得因安危谨慎把已闭合的救应压成高危救应未断附记；不得因反馈救活而把医护承接泛化成通用利成规则；不得把子孙弱直接等同救应全断；不得把高危救应未断附记写成第三终态；不得把 L5 母盘反馈反向定义 LV1 / LV2 主链。
 - **双向防错说明**：验证两个镜像旧错——① 漏看 J1 / B1 与父母医护线关系导致凶象误压；② 夸大医护接入导致真死判活。本盘不证明“凡动鬼合父母皆能救活”，只证明：当医护承接成立、医护线有力、且药能回生 U1 本身形成现实闭环时，可归终局利成。若下一盘仅有医护接入而 U1 本体硬证未解除，仍应归高危救应未断附记或终局利空候选。
 

@@ -1,0 +1,4 @@
+case_id: T1-D
+question: "某人急救能否救回来"
+structure: "B1 可解，Y1 到病且落验（生命体征稳定、医方确认救回）。"
+derive_from: null

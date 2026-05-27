@@ -1,0 +1,4 @@
+case_id: T1-B
+question: "某人急救能否救回来"
+structure: "B1 闭合，Y1 全断且到不了 B1，终止信号成立，U1 入不可回转终止态。"
+derive_from: null

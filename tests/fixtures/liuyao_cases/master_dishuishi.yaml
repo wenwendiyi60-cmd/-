@@ -1,0 +1,22 @@
+# 双向防错母盘的地水师实现：朋友中毒昏迷抢救能否救回
+# 内坎外坤；二爻(官鬼辰土)、五爻(兄弟亥水)动；酉月庚辰日缺时辰
+case_id: MASTER
+question: "朋友中毒昏迷送医抢救能否救回（用神取兄弟亥水）"
+calendar:
+  date: "2026-09-XX"
+  month_pillar: "丁酉"
+  day_pillar: "庚辰"
+  hour_pillar: null
+hexagram:
+  name: "地水师"
+  palace: "坎"
+  lines:
+    6: { yin_yang: "yin", is_moving: false }
+    5: { yin_yang: "yin", is_moving: true }
+    4: { yin_yang: "yin", is_moving: false }
+    3: { yin_yang: "yin", is_moving: false }
+    2: { yin_yang: "yang", is_moving: true }
+    1: { yin_yang: "yin", is_moving: false }
+shi_ying:
+  shi: 3
+  ying: 6

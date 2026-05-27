@@ -1,0 +1,4 @@
+case_id: MASTER
+question: "朋友中毒昏迷送医抢救能否救回（用神取兄弟亥水）"
+structure: "双向防错母盘。医护承接(辰酉合)成立、父母酉金临月有力、申/酉出空后金生亥水回生 U1，闭环。"
+derive_from: tests/fixtures/liuyao_cases/master_dishuishi.yaml

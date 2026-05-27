@@ -1,0 +1,21 @@
+# 基础样例：水雷屯（坎上震下，坎宫二世，世2应5），三爻动
+case_id: sample_basic
+question: "示例：某事能否成"
+calendar:
+  date: "2026-05-27"
+  month_pillar: "丙午"
+  day_pillar: "戊寅"
+  hour_pillar: "壬子"
+hexagram:
+  name: "水雷屯"
+  palace: "坎"
+  lines:
+    6: { yin_yang: "yin", is_moving: false }
+    5: { yin_yang: "yang", is_moving: false }
+    4: { yin_yang: "yin", is_moving: false }
+    3: { yin_yang: "yin", is_moving: true }
+    2: { yin_yang: "yin", is_moving: false }
+    1: { yin_yang: "yang", is_moving: false }
+shi_ying:
+  shi: 2
+  ying: 5

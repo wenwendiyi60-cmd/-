@@ -10,6 +10,20 @@
 
 ---
 
+## 执行层工程化（盘面派生器 + 回归 harness + 程序化约束） — 2026-05-27
+
+**把执行从"模型自我表演"改成"工具先算、模型只解释、回归能验"**
+
+- [新增] `tools/liuyao_calc/`（包：ganzhi / relations / najia / derive / schema / cli）：读人工盘 YAML → 校验人工值与规则表 → 输出 derived.json（旬空/纳甲/六亲/世应/动变/本变卦/五行/月日生克/六合六冲/空亡/VV）。人工值与表算冲突直接 fail。第一版不碰旺衰档/病药/应期裁量
+- [新增] `tests/fixtures/liuyao_cases/`：master_dishuishi（母盘地水师）、sample_basic（水雷屯）、conflict_palace（冲突演示）
+- [新增] `tests/test_derive.py`：派生器单测，6/6 通过（PR1 验收）
+- [新增] `tests/regression/`：新回归 harness（cases + expected + run_regression.py）。每用例两层断言——正文 must_contain/must_not_contain + F7 末尾 CHECK_JSON 结构字段比对；输出 per-case 与 overall 失败率（PR2 验收）。sample_runs 离线演示：overall 50%（T1-A 50% 抓到漂移、T1-C 100% 抓到违规、MASTER 0%）
+- [修改] 执行册新增 §二十三 程序化约束四条：strict_step 默认分步、derived.json 优先、F6 不得引入新爻、F7 输出 CHECK_JSON；更新工具引用（liuyao_paipan→liuyao_calc、新 harness 路径）
+- [修改] 审计册更新回归工具引用至 `tests/regression/` 与 `tools/liuyao_calc`
+- [移除] 替换被取代的临时件：`tools/liuyao_paipan.py`、`tools/run_regression.py`、`tests/regression_cases.json`、`tests/sample_outputs/`
+
+---
+
 ## v0.7-RC1-final（最终可投喂版 · T1 写实） — 2026-05-27
 
 **审计册 T1 对照写实 + 回归用例落地**

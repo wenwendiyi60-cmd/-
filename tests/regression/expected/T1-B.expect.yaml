@@ -1,0 +1,23 @@
+case_id: T1-B
+runs: 20
+temperature: 0
+must_contain:
+  - "用神状态档：用神绝断"
+  - "安全层结论：高危不安全"
+  - "死亡终态象层结论：死亡终态象强"
+  - "确认"
+must_not_contain:
+  - "平安倾向"
+  - "现实已经死亡"
+  - "现实确认安全"
+  - "中间终态层"
+  - "已亡坐实"
+structured_expect:
+  f5_layer: ["终局利空", "死亡终态象强候选"]
+  god_state: "用神绝断"
+  safety_layer: "高危不安全"
+  death_symbol_layer: "死亡终态象强"
+  y1_to_b1: "未到病"
+  y1_luoyan: "未落验"
+  introduced_new_line_in_f6: false
+  forbidden_terms_used: []

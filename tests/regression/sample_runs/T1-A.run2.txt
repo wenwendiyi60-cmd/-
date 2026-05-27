@@ -1,0 +1,20 @@
+（演示·模型漂移的一次 run：把只落承接误升为已落验，死亡终态象层也写错）
+
+F6a 安危类双层外放：
+用神状态档：用神得救。
+安全层结论：高危不安全。
+死亡终态象层结论：未触发。
+附记：高危救应未断。
+
+CHECK_JSON:
+{
+  "case_id": "T1-A",
+  "f5_layer": "高危救应未断附记",
+  "god_state": "用神得救",
+  "safety_layer": "高危不安全",
+  "death_symbol_layer": "未触发",
+  "y1_to_b1": "到病",
+  "y1_luoyan": "已落验",
+  "introduced_new_line_in_f6": false,
+  "forbidden_terms_used": []
+}

@@ -30,7 +30,8 @@
 │
 ├── rules/                 # 六爻核心规则文件
 ├── cases/                 # 真实或示例预测案例
-├── tests/                 # 测试用例（用于验证口令行为）
+├── tools/                 # 工程件：liuyao_calc 确定性盘面派生器
+├── tests/                 # 单测、fixtures 与 regression 回归 harness
 └── templates/             # 新口令、新案例的模板文件
 ```
 

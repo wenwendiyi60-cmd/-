@@ -1,0 +1,4 @@
+case_id: T1-A
+question: "某人急救能否救回来"
+structure: "B1 重，U1 受伤；Y1（父母医护/子孙救应）已到 B1，但只落承接端（医护接入），尚未落终局结果；死亡终态象未坐实。"
+derive_from: null

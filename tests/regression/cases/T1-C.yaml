@@ -1,0 +1,4 @@
+case_id: T1-C
+question: "某人急救能否救回来"
+structure: "B1 重，Y1 有象但到不了 B1（弱接触/未到病），无承接闭环。"
+derive_from: null

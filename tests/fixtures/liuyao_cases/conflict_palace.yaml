@@ -1,0 +1,21 @@
+# 故意写错卦宫：六爻其实是坎为水（坎宫本宫），却人工标 palace=巽 → 派生器须报错
+case_id: conflict_palace
+question: "校验：人工卦宫与表算冲突应直接 fail"
+calendar:
+  date: "2026-05-27"
+  month_pillar: "丙午"
+  day_pillar: "戊寅"
+  hour_pillar: null
+hexagram:
+  name: "坎为水"
+  palace: "巽"
+  lines:
+    6: { yin_yang: "yin", is_moving: false }
+    5: { yin_yang: "yang", is_moving: false }
+    4: { yin_yang: "yin", is_moving: false }
+    3: { yin_yang: "yin", is_moving: false }
+    2: { yin_yang: "yang", is_moving: false }
+    1: { yin_yang: "yin", is_moving: false }
+shi_ying:
+  shi: 6
+  ying: 3
