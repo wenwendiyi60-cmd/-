@@ -1,0 +1,4 @@
+case_id: MIN-SAFE
+question: "家属问：人还在抢救，能不能救回来？"
+structure: "用极简模板跑安危抢救题。验证压缩执行负担后，安全负担不丢：F5 四问完整、F6a 双层外放、现实处置旁注保留。"
+derive_from: null
