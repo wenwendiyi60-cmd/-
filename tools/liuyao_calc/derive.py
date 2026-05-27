@@ -137,6 +137,11 @@ def derive(case: dict) -> dict:
         pass_=bool(day_pillar),
     )
 
+    # S1 = 世爻（求测者）。逐爻仍带 is_shi；此处再给一个直达字段。
+    _shi_line = out_lines[comp_shi_pos - 1]
+    s1 = {"pos": _shi_line["pos"], "branch": _shi_line["branch"],
+          "element": _shi_line["element"], "six_relative": _shi_line["six_relative"]}
+
     return {
         "case_id": case.get("case_id"),
         "question": case.get("question"),
@@ -153,7 +158,8 @@ def derive(case: dict) -> dict:
             "palace_position": pinfo["pos_name"],
             "inner": pinfo["inner"], "outer": pinfo["outer"],
             "changed_name": bian["name"] if bian else None,
-            "shi": comp_shi_pos, "ying": comp_ying_pos,
+            "shi": comp_shi_pos, "shi_pos": comp_shi_pos, "ying": comp_ying_pos,
+            "S1": s1,
             "moving_positions": [i + 1 for i in moving_idx],
             "lines": out_lines,
         },

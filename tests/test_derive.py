@@ -31,6 +31,9 @@ def test_master_dishuishi():
     assert h["name"] == "地水师"
     assert h["palace"] == "坎" and h["palace_position"] == "归魂"
     assert h["shi"] == 3 and h["ying"] == 6
+    # S1 直达字段（v2.1）：世爻=三爻妻财午火
+    assert h["shi_pos"] == 3
+    assert h["S1"]["pos"] == 3 and h["S1"]["branch"] == "午" and h["S1"]["six_relative"] == "妻财"
     assert h["changed_name"] == "水地比"
     assert d["calendar"]["xunkong"] == ["申", "酉"]
     assert d["calendar"]["hour_missing"] is True
