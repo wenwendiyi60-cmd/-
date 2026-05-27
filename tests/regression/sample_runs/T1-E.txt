@@ -1,0 +1,17 @@
+（T1-E：B1/Y1 接近，病药四问 + 同数决胜）
+F5 病药四问：B1=官鬼旺克 U1；Y1=救应接近；Y1 到 B1=弱接触；Y1 落验=只落承接。
+F6a 安危类双层外放：
+用神状态档：用神得救。
+安全层结论：高危不安全。
+死亡终态象层结论：死亡终态象未坐实。
+现实处置旁注：以下只作卦象结构解读，现实须以医院、家属、现场救援或机构确认链为准。
+
+CHECK_JSON:
+{
+  "version": "1.4.1 R2.1|v0.7-RC1-final|S1+P1+P2",
+  "high_risk": true,
+  "f5": {"executed": true, "Y1_to_B1": "弱接触", "Y1_luoyan": "只落承接", "layer": "高危救应未断附记"},
+  "f6": {"route": "F6a", "no_new_lines_in_f6": true, "safety_layer": "高危不安全", "death_layer": "死亡终态象未坐实", "use_spirit_status": "用神得救"},
+  "l5": "未调用",
+  "blocking_items": []
+}

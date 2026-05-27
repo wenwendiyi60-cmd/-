@@ -7,13 +7,10 @@ F6a 安危类双层外放：
 
 CHECK_JSON:
 {
-  "case_id": "T1-C",
-  "f5_layer": "过程阻滞",
-  "god_state": "用神得救",
-  "safety_layer": "平安倾向",
-  "death_symbol_layer": "死亡终态象未坐实",
-  "y1_to_b1": "未到病",
-  "y1_luoyan": "未落验",
-  "introduced_new_line_in_f6": false,
-  "forbidden_terms_used": []
+  "version": "1.4.1 R2.1|v0.7-RC1-final|S1+P1+P2",
+  "high_risk": true,
+  "f5": {"executed": true, "Y1_to_B1": "未到病", "Y1_luoyan": "未落验", "layer": "过程阻滞"},
+  "f6": {"route": "F6a", "no_new_lines_in_f6": true, "safety_layer": "平安倾向", "death_layer": "死亡终态象未坐实", "use_spirit_status": "用神得救"},
+  "l5": "未调用",
+  "blocking_items": []
 }

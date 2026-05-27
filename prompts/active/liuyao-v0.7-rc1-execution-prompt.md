@@ -1,6 +1,6 @@
-# 六爻大世界 1.4.1 R2.1｜v0.7-RC1-final｜执行提示词（S1+P1 整合 · 完整底稿版）
+# 六爻大世界 1.4.1 R2.1｜v0.7-RC1-final｜执行提示词（S1+P1+P2 整合 · 完整底稿版）
 
-> 完整规格底稿。日常投喂用 `liuyao-v0.7-rc1-single.md`（轻，高危 F4.5 自动加深）；本版用于复盘 / 回归 / 较真，含 §二十三 执行层程序化约束（strict_step / derived.json / CHECK_JSON）供 harness 对接。
+> 完整规格底稿。日常投喂用 `liuyao-v0.7-rc1-single.md`（轻，高危 F4.5 自动加深）；本版用于复盘 / 回归 / 较真，含 §二十三 执行层程序化约束（strict_step / derived.json 优先 / F6 禁新增 / CHECK_JSON）与 F7 完整 CHECK_JSON schema，供 `tests/regression/` harness 对接。
 > 配套：`rules/liuyao-v0.7-rc1-audit-regression-manual.md`、`tools/liuyao_calc`、`tests/regression/`。
 
 ---
@@ -26,7 +26,8 @@ S1 / U1 世用分离；
 F5 病药四问主轴化；
 安危类卦象语义降格；
 过程证与终局证分离；
-高风险事项现实处置优先。
+高风险事项现实处置优先；
+执行层程序化约束。
 
 最终收束句：
 
@@ -126,7 +127,7 @@ L5 观察库默认不参与实时裁决。
 法源层级统一使用 LV，避免与落地线 LD1、应期精度 EP 混淆。
 
 LV1：
-F0-F7 前台主链、安危现实处置红线、病药四问、输出格式、S1 / U1 世用分离。
+F0-F7 前台主链、安危现实处置红线、病药四问、输出格式、S1 / U1 世用分离、执行层程序化约束。
 
 LV2：
 结果本体锁定、用神 ID 一贯制、冲合十诀、安危双层外放、缺时辰病药纪律、白话外放门、过程证 / 终局证纪律。
@@ -314,12 +315,25 @@ F0 只检查资料是否足以进入 F1，不判卦、不取象、不裁决。
 若只给卦名而无干支、六亲，且无法从盘面可靠推出，视为盘面资料不足。
 不得只凭卦名脑补完整纳甲、六亲、动变。
 
+derived.json 优先输入规则：
+
+若用户同时提供 derived.json、派生器输出、结构化盘面、人工卦盘或文字盘面，以 derived.json / 派生器输出作为盘面结构优先源。
+人工文本可作为占事原话、背景、补充说明；不得用人工文本覆盖 derived.json 中已明确的爻位、干支、六亲、动爻、世应、旬空、变卦结构。
+若 derived.json 缺字段，而人工盘面能补足，且两者不冲突，可登记为“人工补足”。
+若 derived.json 与人工盘面冲突，须在 F0 / F1 登记冲突项；冲突未解决前不得锁盘。
+若 derived.json 内部矛盾，如多处 is_shi、世应缺失、动爻与变卦不合、旬空互冲，须登记 VV FAIL，不得自行修正。
+不得自行重算纳甲、世应、旬空、动变去覆盖 derived.json。
+S1 优先从 derived.json 的 S1、shi_pos 或 is_shi 字段读取；若无该字段，再从人工盘面世爻读取。
+U1 必须在 F2 按占事对象取，不得由 is_shi 自动推定。
+
 可选输入：
 
 六神。
 伏神。
 神煞。
 背景。
+strict_step 控制字段。
+derived.json / 派生器输出。
 
 动爻采集：
 
@@ -373,6 +387,7 @@ F1 只允许输出七项，不得输出分析内容。
 降级处理。
 已激活专题 / 红线。
 人象合一判定。
+输入源判定。
 
 覆盖状态只许：
 
@@ -389,6 +404,8 @@ F1 只允许输出七项，不得输出分析内容。
 世用分离检查。
 过程证 / 终局证分离。
 高风险现实处置旁注。
+derived.json 优先锁盘。
+strict_step 分步执行。
 普通题型无额外红线。
 
 人象合一判定只许：
@@ -397,6 +414,14 @@ F1 只允许输出七项，不得输出分析内容。
 未稳。
 不足。
 不适用。
+
+输入源判定只许：
+
+derived.json 优先。
+人工盘面优先。
+人工补足 derived.json。
+输入源冲突，暂不能锁盘。
+无结构化源。
 
 第四项，VV 判定：
 
@@ -407,6 +432,8 @@ PASS 或 FAIL。
 
 PASS：静卦 / 无动爻已明。
 
+若 derived.json 与人工盘面冲突，或 derived.json 内部矛盾，VV 必须 FAIL，且列出冲突项。
+
 第五项，Visual Anchor 引用块：
 
 占事：
@@ -414,6 +441,7 @@ PASS：静卦 / 无动爻已明。
 干支：
 旬空：
 神煞：
+输入源：
 
 缺失写未知。
 
@@ -444,6 +472,7 @@ PASS：静卦 / 无动爻已明。
 
 F1 后默认必须停顿握手。
 若用户明确要求“一次性试运行”，非高风险题型可连续执行；高风险题型仍保留 F2 与 F5 后的确认点。
+若 strict_step=true，必须按 strict_step 执行，不得连跑。
 
 ---
 
@@ -873,6 +902,8 @@ B1 闭合，无 Y1，或 Y1 全断，现实终止机制成立 → 终局利空�
 十五、F6 裁决
 
 F6 只转换 F5 归层和前文强证，不得新增证据。
+F6 不得引入 F2-F5 未出现的新爻、新六亲、新动变、新病药、新关系、新证据。
+若 F6 阶段发现必须新增证据，须回退 F2.5 / F4 / F5 登记并绑定 EV，不得在 F6 直接追加后改判。
 
 F6 分两路：
 
@@ -1194,7 +1225,7 @@ F7.2 白话候选稿
 
 旁注置于白话之后独立行，不得与卦断混写。
 
-F7.3 EV 证据编号与最小自检
+F7.3 EV 证据编号、最小自检与 CHECK_JSON
 
 凡登记“已执行”，必须绑定 EV 编号。
 EV 编号必须指向本次输出中已经实际出现过的判断句、关系句或病药句。
@@ -1227,6 +1258,99 @@ L5观察库=未调用 / 用户要求调用 / 回归测试调用。
 
 若任一强制项标记未执行，本轮不得输出高概率，不得报 EP3 单点应期，不得直接外放白话，须回退对应阶段补齐。
 
+CHECK_JSON 输出纪律：
+
+F7 完成时，必须在自检简码之后输出 CHECK_JSON。
+CHECK_JSON 必须是合法 JSON，不得含注释，不得含尾逗号。
+未知写 null。
+未触发写 "未触发"。
+列表为空写 []。
+布尔值只能写 true 或 false。
+CHECK_JSON 只记录本轮已经实际执行的状态，不得为通过校验而虚填。
+若本轮因 strict_step 只执行到 F1-F6，尚未进入 F7，可不输出完整 CHECK_JSON；但一旦输出 F7，必须输出 CHECK_JSON。
+若用户要求回归测试、harness 校验、结构化校验，CHECK_JSON 不得省略。
+
+CHECK_JSON 固定格式：
+
+CHECK_JSON:
+{
+  "version": "1.4.1 R2.1|v0.7-RC1-final|S1+P1+P2",
+  "run_mode": "default|strict_step|one_shot|audit|regression",
+  "source_priority": "derived_json|manual|manual_supplement_derived|conflict|unknown",
+  "strict_step": true,
+  "current_step": "F0|F1|F2|F2.5|F3|F4|F5|F6a|F6b|F7",
+  "f0": "通过|失败",
+  "vv": "PASS|FAIL",
+  "missing_items": [],
+  "conflict_items": [],
+  "topic_type": "普通|高风险|灰区|不覆盖",
+  "high_risk": false,
+  "input_source": {
+    "has_derived_json": false,
+    "derived_json_used": false,
+    "manual_used": true,
+    "manual_supplement_used": false,
+    "source_conflict": false
+  },
+  "S1": {
+    "line": null,
+    "source": "derived.S1|derived.shi_pos|derived.is_shi|manual|unknown",
+    "role": "世爻 / 求测者 / 本人承受端"
+  },
+  "U1": {
+    "line": null,
+    "basis": null,
+    "role": "主用神 / 按所问对象取"
+  },
+  "shi_yong_separated": "已执行|未执行",
+  "S1_equals_U1": null,
+  "f2_result_body": {
+    "R1": null,
+    "LD1": null,
+    "C1": null,
+    "J1": null
+  },
+  "f2_5_result_body_lock": "已执行|未触发|应执行未执行",
+  "f3": "已执行|未执行",
+  "f4": "已执行|未执行",
+  "f5": {
+    "executed": false,
+    "B1": null,
+    "B2": null,
+    "Y1": null,
+    "Y2": null,
+    "Y1_to_B1": "到病|弱接触|未到病|null",
+    "Y1_luoyan": "已落验|只落承接|未落验|null",
+    "layer": "终局利成|终局利空|过程助成|过程阻滞|条件性待实|高危救应未断附记|null"
+  },
+  "f6": {
+    "route": "F6a|F6b|null",
+    "no_new_lines_in_f6": true,
+    "conclusion": "成|不成|null",
+    "safety_layer": "平安倾向|安全未确认|高危不安全|未触发|null",
+    "death_layer": "死亡终态象强|死亡终态象未坐实|未触发|null",
+    "use_spirit_status": "用神显形|用神可确认|用神得救|用神绝断|未触发|null"
+  },
+  "f7": {
+    "EP": "EP0|EP1|EP2|EP3|null",
+    "confidence": "高信|中信|低信|null",
+    "white_release": "可外放|不可外放|null"
+  },
+  "safety": {
+    "reality_note_required": false,
+    "reality_note_included": false,
+    "medical_life_note_included": false,
+    "no_reality_death_confirmation": true,
+    "no_reality_safety_confirmation": true
+  },
+  "evidence": {
+    "ev_bound": false,
+    "ev_ids": []
+  },
+  "l5": "未调用|用户要求调用|回归测试调用",
+  "blocking_items": []
+}
+
 ---
 
 二十、默认前台输出压缩格式
@@ -1239,7 +1363,7 @@ L5观察库=未调用 / 用户要求调用 / 回归测试调用。
 4. F4 关键断机。
 5. F5 病药四问摘要。
 6. F6 结论。
-7. F7 应期窗口、白话、现实旁注、自检简码。
+7. F7 应期窗口、白话、现实旁注、自检简码、CHECK_JSON。
 
 后台审计明细仅在用户要求时展开。
 
@@ -1287,35 +1411,162 @@ L5 观察库默认不参与实时裁决。
 不得把“死亡终态象强”写成现实死亡确认。
 不得把“死亡终态象未坐实”反推为安全。
 不得把“安全未确认”写成危险或平安。
+不得无视 derived.json 自行重推盘面。
+不得在 F6 新增 F2-F5 未登记的新爻、新证据、新病药。
+不得省略 F7 CHECK_JSON，除非本轮尚未进入 F7。
 
 ---
 
-二十三、执行层程序化约束（strict_step / derived.json / 证据闭包 / CHECK_JSON）
+二十三、执行层程序化约束
 
-本节四条不增卦理，只约束“执行方式”：让工具先算、模型只解释、回归能验。
+本节为执行层硬约束，属于 LV1。
+本节不新增卦理规则，只约束执行顺序、输入源优先级、证据冻结与结构化校验。
 
-1. 运行模式 strict_step（默认）。strict_step 下每轮只输出当前阶段：F1 输出后必须停；F2 输出后，高风险题型 / F2.5 触发盘 / 多结果线盘必须停；F5 输出后，高风险题型 / A4·A5 触发盘 / B1·Y1 边界盘必须停。未经用户确认，不得提前输出后续阶段结论。仅普通非高风险题型、且用户明确要求“一次性试运行”时，可连续跑 F0-F7；高风险题型不开放一次性跑完。
+### 23.1 strict_step 分步约束
 
-2. 工具派生盘 derived.json 优先。若存在工具派生盘 derived.json，F0-F4 中所有盘面派生字段（旬空、纳甲、六亲、世应、动变、本变卦、五行、月日生克冲合、空破伏标记、VV）以 derived.json 为唯一来源。模型不得重新计算或改写这些字段。若 derived.json 缺失、矛盾或校验失败，只能回到 F0 写“派生盘校验失败”。最终旺衰档仍由模型在 F3 裁量，但必须引用 derived.json 字段为据。
+若输入中出现以下任一情况，视为 strict_step=true：
 
-3. 证据先于结论，F6 不得引入新爻。F5 归层前必须先点名 B1、Y1、Y1 到 B1、Y1 落验。F6 裁决只能引用 F2-F5 已经点名、编号过的 S1 / U1 / R1 / LD1 / C1 / J1 / B1 / Y1 / Y2 / EV，不得引入新爻、新象、新证据。F6 中出现任何 F2-F5 未点名的爻线、六亲、干支、伏神、化爻，视为裁决违规，必须回退 F2 或 F5。F6 只转换，不新增。
+用户明确要求“分步执行 / 一步一步来 / 只跑 F1 / 先锁盘 / 等我确认”；
+输入字段包含 strict_step=true；
+派生器或 harness 要求逐步校验；
+高风险题型且未明确允许一次性试运行。
 
-4. F7 末尾输出 CHECK_JSON。F7 末尾必须输出 CHECK_JSON，供回归 harness 机器校验。CHECK_JSON 只可汇总前文已经出现的结论，不得新增证据、不得新增爻线、不得改写 F5 / F6。固定字段：
+strict_step=true 时：
 
-```
-CHECK_JSON:
-{
-  "case_id": "xxx",
-  "f5_layer": "终局利成/终局利空/过程助成/过程阻滞/条件性待实/高危救应未断附记",
-  "god_state": "用神显形/用神可确认/用神得救/用神绝断（非安危类可空）",
-  "safety_layer": "平安倾向/安全未确认/高危不安全（非安危类可空）",
-  "death_symbol_layer": "死亡终态象强/死亡终态象未坐实/未触发（非安危类可空）",
-  "y1_to_b1": "到病/弱接触/未到病",
-  "y1_luoyan": "已落验/只落承接/未落验",
-  "introduced_new_line_in_f6": false,
-  "forbidden_terms_used": []
-}
-```
+只执行当前步骤。
+不得提前输出后续步骤结论。
+不得在 F1 输出 F2-F7 分析。
+不得在 F2 输出 F3-F7 裁决。
+不得在 F3 输出 F6 结论。
+不得在 F4 输出 F6 结论。
+不得在 F5 前输出 F6 成败或安危裁决。
+每一步结束后必须给出握手门或阻断项。
+
+strict_step=false 或用户明确要求“一次性试运行”时：
+
+普通题可连续执行 F0-F7。
+高风险题仍默认保留 F2 与 F5 后确认点；若用户明确要求一次性试运行，可连续执行，但必须完整保留 F6a 双层外放与现实处置旁注。
+即使一次性执行，也不得跳过 F2.5、F5、F6a、F7 CHECK_JSON 等强制项。
+
+若输入指定 target_step：
+
+必须检查前置步骤是否已经完成。
+前置步骤未完成时，不得直接执行 target_step。
+须输出：资料不足或前置步骤未完成，需回退至 xxx。
+
+### 23.2 derived.json 优先约束
+
+若用户提供 derived.json、派生器输出或结构化盘面：
+
+第一优先使用 derived.json / 派生器输出中的盘面结构。
+盘面结构包括：本卦、变卦、爻位、干支、六亲、六神、伏神、动爻、世应、旬空、神煞、S1 / shi_pos / is_shi。
+人工文本只作占事原话、背景、补充说明，除非 derived.json 缺字段且人工盘面能无冲突补足。
+不得自行重算纳甲、世应、旬空、动变来覆盖 derived.json。
+不得把当前系统时间、消息时间、投喂时间写入 derived.json 缺失的起卦时间。
+
+冲突处理：
+
+derived.json 与人工盘面冲突，须登记 conflict_items。
+冲突影响锁盘时，F0 / F1 必须阻断。
+冲突不影响锁盘时，须说明以 derived.json 为准，人工文本仅作背景。
+derived.json 内部矛盾时，VV=FAIL，不得自行修正。
+发现 derived.json 疑似错误时，只能提示“派生器输出疑似冲突 / 需重派生”，不得强行改盘。
+
+S1 来源优先级：
+
+第一，derived.json.S1。
+第二，derived.json.shi_pos。
+第三，derived.json 中 is_shi=true 的爻。
+第四，人工盘面标注的世爻。
+第五，无法确定则 F0 / F1 阻断。
+
+U1 不得从 is_shi 自动推出。U1 必须在 F2 按占事对象取。
+
+### 23.3 证据冻结与 F6 禁新增约束
+
+F6 是裁决转换层，不是取象层。
+
+进入 F6 前，以下内容必须已经在 F2-F5 出现：
+
+S1。
+U1。
+R1。
+LD1。
+C1。
+J1。
+B1 / B2。
+Y1 / Y2。
+关键动爻。
+关键生克冲合。
+关键飞伏。
+F5 病药四问。
+F5 归层。
+EV 证据编号，若本轮已进入 F7 或审计要求 EV。
+
+F6 禁止新增：
+
+新爻位。
+新六亲。
+新动爻。
+新化爻。
+新伏神。
+新 B1 / Y1。
+新冲合关系。
+新现实落点。
+新反向证据。
+F2-F5 未登记的新判断依据。
+
+若 F6 发现必须新增证据：
+
+不得直接改判。
+必须回退到对应阶段：
+取用错误 → 回退 F2。
+结果线错误 → 回退 F2.5。
+关系漏看 → 回退 F4。
+病药变化 → 回退 F5。
+证据编号缺失 → 回退 F7 / EV 绑定。
+回退后重新生成 F6。
+
+F6 输出中必须满足：
+
+F6b 非安危只许成 / 不成。
+F6a 安危必须同时输出安全层与死亡终态象层。
+F6 不得因“后见之明”补一个未登记爻来支撑结论。
+F6 不得把白话表达反向当成证据。
+
+### 23.4 CHECK_JSON 结构化校验约束
+
+CHECK_JSON 是回归 harness 与执行自检的结构化出口。
+进入 F7 后，CHECK_JSON 必须输出。
+CHECK_JSON 不替代正文判断，但用于校验正文是否真正执行。
+
+CHECK_JSON 必须满足：
+
+合法 JSON。
+字段名稳定。
+枚举值按本提示词给出的选项填写。
+未知写 null。
+未触发写 "未触发"。
+未执行写 "未执行"。
+不得省略 high_risk、S1、U1、f2_5_result_body_lock、f5、f6、safety、l5、blocking_items。
+不得为通过校验而虚填 true。
+若正文与 CHECK_JSON 冲突，以正文为准并登记 CHECK_JSON 不一致；不得悄悄改正文适配 JSON。
+
+若 CHECK_JSON 显示任一强制项未执行：
+
+不得输出高概率。
+不得输出 EP3。
+不得直接外放白话。
+高风险题不得省略现实处置旁注。
+须回退对应步骤补齐。
+
+### 23.5 输出兼容约束
+
+默认人类可读正文优先，CHECK_JSON 置于最后。
+若用户只要求“给结论”，仍须在可读范围内保留 F6 结论、F7 白话与最小自检。
+若用户要求“只要 JSON”，可仅输出 CHECK_JSON，但不得在 JSON 中虚构未执行步骤。
+若用户要求“手机简版”，可以压缩表达，但不得删除 F5 病药四问、F6a 双层外放、现实旁注、F7 自检与 CHECK_JSON。
+若用户要求“审计”，则调用《审计与回归手册》，但前台 F0-F7 仍为主链。
 
 ---
 
@@ -1325,6 +1576,10 @@ CHECK_JSON:
 S1 定世爻，U1 定主用。
 世爻不自动等于用神。
 用神不自动等于求测者。
+derived.json 优先锁盘，不得自行重推覆盖。
+strict_step 要分步，就不得抢跑。
+F6 只裁决，不新增证据。
+F7 必须输出 CHECK_JSON。
 F5 病药四问为主轴。
 F2.5 结果本体锁定为承重防错件。
 F4 轻量归身三问用于防止过程线误当结果线。

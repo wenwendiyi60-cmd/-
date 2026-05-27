@@ -20,6 +20,14 @@
 
 ---
 
+## P2 整合：执行层程序化约束入正文 + harness 对齐嵌套 CHECK_JSON — 2026-05-27
+
+- [修改] 完整版 `liuyao-v0.7-rc1-execution-prompt.md` 升 S1+P1+P2：§八 F0 加 derived.json 优先输入规则；§九 F1 加输入源判定 + 冲突 VV FAIL + 输入源引用块；§十五 F6 内嵌"禁引入新爻/必回退";§十九 F7.3 加 CHECK_JSON 输出纪律 + 完整嵌套 schema；§二十三 扩为五节（23.1 strict_step / 23.2 derived 优先 / 23.3 证据冻结 F6 禁新增 / 23.4 CHECK_JSON 校验 / 23.5 输出兼容）；LV1/禁增/收束/默认输出同步。章节 一→二十四 连续
+- [修复] harness 对齐 P2 嵌套 CHECK_JSON（否则口令改了校验静默失效）：`run_regression.py` 支持点路径取值（`f5.layer` / `f6.safety_layer` 等）+ `--exec-prompt` 默认指向完整版；`expected/*.expect.yaml` 由旧扁平键改嵌套点路径键、删 `forbidden_terms_used`（违禁词改由 must_not_contain 文本层）、`introduced_new_line_in_f6:false`→`f6.no_new_lines_in_f6:true`
+- [新增] `tests/regression/sample_runs/` 补建 T1-B/T1-D/T1-E 样例、重写 T1-A/T1-C/MASTER 的 CHECK_JSON 为嵌套 schema；离线跑批 overall 25%（T1-A.run2 与 T1-C 为设计内故意失败，其余全过）
+- [修改] 审计册注明 CHECK_JSON 用 P2 嵌套 schema、expect 以点路径取值
+- 校验：单测 6/6、harness 7 用例对齐、无残留旧名
+
 ## 完整版整合 S1+P1，并补回 §二十三 程序化约束 — 2026-05-27
 
 - [修改] `prompts/active/liuyao-v0.7-rc1-execution-prompt.md` 替换为「S1+P1 整合版」：S1 全面织入（命名表 / 世用根本纪律 / F2 世用分离 / F3 S1气势 / F4 S1关系 / F5.1 得位说明 / 禁增边界 / 最终收束）；P1 三条到位；新增 §八 F0「本卦/变卦须落到爻位干支六亲，只给卦名不可靠推出即资料不足，不得只凭卦名脑补」；F4 归身三问改写"归 S1"

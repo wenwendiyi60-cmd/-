@@ -11,11 +11,10 @@ must_not_contain:
   - "现实已经死亡"
   - "现实确认安全"
 structured_expect:
-  f5_layer: ["终局利成", "终局利空", "过程助成", "过程阻滞", "条件性待实", "高危救应未断附记"]
-  god_state: ["用神显形", "用神可确认", "用神得救", "用神绝断"]
-  safety_layer: ["平安倾向", "安全未确认", "高危不安全"]
-  death_symbol_layer: ["死亡终态象强", "死亡终态象未坐实", "未触发"]
-  y1_to_b1: ["到病", "弱接触", "未到病"]
-  y1_luoyan: ["已落验", "只落承接", "未落验"]
-  introduced_new_line_in_f6: false
-  forbidden_terms_used: []
+  f5.layer: ["终局利成", "终局利空", "过程助成", "过程阻滞", "条件性待实", "高危救应未断附记"]
+  f6.use_spirit_status: ["用神显形", "用神可确认", "用神得救", "用神绝断"]
+  f6.safety_layer: ["平安倾向", "安全未确认", "高危不安全"]
+  f6.death_layer: ["死亡终态象强", "死亡终态象未坐实", "未触发"]
+  f5.Y1_to_B1: ["到病", "弱接触", "未到病"]
+  f5.Y1_luoyan: ["已落验", "只落承接", "未落验"]
+  f6.no_new_lines_in_f6: true

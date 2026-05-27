@@ -74,10 +74,20 @@ def extract_check_json(text: str):
 
 
 def _match(expected, actual) -> bool:
-    # 标量字段给 list = 任选其一；list 值字段（如 forbidden_terms_used）按相等比
+    # 标量字段给 list = 任选其一；list 值字段按相等比
     if isinstance(expected, list) and not isinstance(actual, list):
         return actual in expected
     return expected == actual
+
+
+def _get_path(cj, path):
+    # 支持点路径取嵌套字段，如 "f6.safety_layer"（对齐 P2 嵌套 CHECK_JSON schema）
+    cur = cj
+    for part in path.split("."):
+        if not isinstance(cur, dict) or part not in cur:
+            return None
+        cur = cur[part]
+    return cur
 
 
 def score_run(text: str, expect: dict):
@@ -95,8 +105,9 @@ def score_run(text: str, expect: dict):
             reasons.append("缺 CHECK_JSON 或无法解析")
         else:
             for k, v in se.items():
-                if not _match(v, cj.get(k)):
-                    reasons.append(f"CHECK_JSON.{k} 期望{v} 得{cj.get(k)!r}")
+                actual = _get_path(cj, k)
+                if not _match(v, actual):
+                    reasons.append(f"CHECK_JSON.{k} 期望{v} 得{actual!r}")
     return (not reasons), reasons
 
 
@@ -129,7 +140,7 @@ def main(argv=None):
     ap.add_argument("--runs", type=int, default=0, help="在线时覆盖 expect.runs")
     ap.add_argument("--exec-prompt",
                     default=os.path.join(ROOT, "prompts", "active",
-                                         "liuyao-v0.7-rc1-single.md"))
+                                         "liuyao-v0.7-rc1-execution-prompt.md"))
     args = ap.parse_args(argv)
 
     expects = sorted(glob.glob(os.path.join(args.expected_dir, "*.expect.yaml")))

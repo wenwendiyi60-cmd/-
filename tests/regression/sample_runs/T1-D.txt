@@ -1,0 +1,17 @@
+（T1-D：B1 可解，Y1 到病且落验）
+F6a 安危类双层外放：
+用神状态档：用神得救。
+安全层结论：平安倾向。
+死亡终态象层结论：未触发。
+病药归层：终局利成。
+现实处置旁注：以下只作卦象结构解读，平安倾向仍须保留现实确认语义；现实仍应联系医院、家属、现场救援核实。
+
+CHECK_JSON:
+{
+  "version": "1.4.1 R2.1|v0.7-RC1-final|S1+P1+P2",
+  "high_risk": true,
+  "f5": {"executed": true, "Y1_to_B1": "到病", "Y1_luoyan": "已落验", "layer": "终局利成"},
+  "f6": {"route": "F6a", "no_new_lines_in_f6": true, "safety_layer": "平安倾向", "death_layer": "未触发", "use_spirit_status": "用神得救"},
+  "l5": "未调用",
+  "blocking_items": []
+}
