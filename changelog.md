@@ -20,6 +20,12 @@
 
 ---
 
+## S1+P1+P2.1 canonical 整合版（CHECK_JSON 兼容主题贯穿全文） — 2026-05-27
+
+- [修改] 完整版 `liuyao-v0.7-rc1-execution-prompt.md` 整体替换为 S1+P1+P2.1 canonical：CHECK_JSON 兼容主题贯穿 §一 核心列 / §二 职责 / §三 F7 / §四 LV1 / §二十二 禁增 / §二十四 收束；F7.3 含 CHECK_JSON 输出纪律 + 顶层强制字段 + 字段含义 + 扁平主+detail 附属固定格式 + 19 条判废规则；§23.4 扁平为主、detail 附属
+- 校验：章节 一→二十四 连续；CHECK_JSON 模板结构合法 JSON；扁平字段与已对齐的 harness 同口径，overall 25%（T1-A.run2 + T1-C 设计内失败）；单测 6/6；无残留旧名
+- harness 上轮已对齐扁平 schema，本次无需再改
+
 ## P2.1：CHECK_JSON 恢复扁平主字段，嵌套降为 detail 附属 — 2026-05-27
 
 > 修正 P2 把 CHECK_JSON 改成纯嵌套、导致 harness 字段对不上的硬点。扁平字段重新成为 harness 主校验口径。
