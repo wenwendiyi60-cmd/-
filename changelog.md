@@ -10,6 +10,17 @@
 
 ---
 
+## 合并为单一执行版（普通题轻 / 高危自动加深） — 2026-05-27
+
+> 用户要求"一版就够"。把多个投喂版收敛为一个。
+
+- [新增] `prompts/active/liuyao-v0.7-rc1-single.md`：唯一需要粘贴给 AI 的版本。普通题保持轻；F6a 高危分支内嵌 A4 双向防错（防误升安全 / 防误压已亡）+ A5 病重吞药拦句 + 死亡门槛三项 + 双面取象并列建模——高危自动加深，不用换版、不用展开审计
+- [移除] 收编进单一版的冗余投喂件：`prompts/active/liuyao-v0.7-rc1-daily-minimal.md`、`templates/liuyao-f0-f7-minimal-template.md`、`templates/liuyao-high-risk-template.md`
+- [修改] `tests/test-002-minimal-safety.md` 与回归 harness `--exec-prompt` 默认指向单一版
+- 定位区分：`single.md`=粘了就用的口令；`execution-prompt.md` / 审计册 / 派生器 / harness = 工程底稿与校验工具，平时不碰
+
+---
+
 ## v2.1 全套对齐：S1（世爻）升为标准代号 — 2026-05-27
 
 把"世/用分离"从日常版推广到全套,S1 成为跨文件标准代号。

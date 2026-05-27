@@ -129,7 +129,7 @@ def main(argv=None):
     ap.add_argument("--runs", type=int, default=0, help="在线时覆盖 expect.runs")
     ap.add_argument("--exec-prompt",
                     default=os.path.join(ROOT, "prompts", "active",
-                                         "liuyao-v0.7-rc1-execution-prompt.md"))
+                                         "liuyao-v0.7-rc1-single.md"))
     args = ap.parse_args(argv)
 
     expects = sorted(glob.glob(os.path.join(args.expected_dir, "*.expect.yaml")))
